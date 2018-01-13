@@ -8,21 +8,21 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
 /**
- * 代码清单 2-3 客户端的 ChannelHandler
- *
- * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
+ * 2.3
  */
 @Sharable
 //标记该类的实例可以被多个 Channel 共享
 public class EchoClientHandler
     extends SimpleChannelInboundHandler<ByteBuf> {
+
+    // 活跃事件
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         //当被通知 Channel是活跃的时候，发送一条消息
         ctx.writeAndFlush(Unpooled.copiedBuffer("Netty rocks!",
                 CharsetUtil.UTF_8));
     }
-
+    // Read0事件?
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) {
         //记录已接收消息的转储

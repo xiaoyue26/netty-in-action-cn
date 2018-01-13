@@ -4,9 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
- * Created by kerr.
- *
- * 代码清单 1-2 被回调触发的 ChannelHandler
+ * 1.2 注册连接的回调函数.
  */
 public class ConnectHandler extends ChannelInboundHandlerAdapter {
     @Override

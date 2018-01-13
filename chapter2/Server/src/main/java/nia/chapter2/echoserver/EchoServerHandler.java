@@ -9,23 +9,20 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 /**
- * 代码清单 2-1 EchoServerHandler
- *
- * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
+ * 2.1
  */
 //标示一个ChannelHandler可以被多个 Channel 安全地共享
 @Sharable
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+    // read可用事件
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf in = (ByteBuf) msg;
-        //将消息记录到控制台
-        System.out.println(
-                "Server received: " + in.toString(CharsetUtil.UTF_8));
-        //将接收到的消息写给发送者，而不冲刷出站消息
-        ctx.write(in);
+        System.out.println("Server received: " + in.toString(CharsetUtil.UTF_8));
+        ctx.write(in); // 未flush
     }
 
+    // read完成事件
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx)
             throws Exception {
@@ -34,12 +31,11 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
                 .addListener(ChannelFutureListener.CLOSE);
     }
 
+    // 异常事件
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,
-        Throwable cause) {
-        //打印异常栈跟踪
+                                Throwable cause) {
         cause.printStackTrace();
-        //关闭该Channel
         ctx.close();
     }
 }
